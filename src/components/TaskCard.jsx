@@ -1,28 +1,39 @@
-"use client"
+"use client";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-
-const TaskCard = ({task}) => {
-
-    const router = useRouter();
+const TaskCard = ({ task }) => {
+  const router = useRouter();
   return (
     <div
-      className="bg-slate-900 p-3 hover:bg-slate-800 hover:cursor-pointer"
-        onClick={() => router.push(`/tasks/edit/${task.id}`)}
+      className="bg-slate-400 p-3 hover:bg-slate-800 hover:cursor-pointer flex-col justify-center"
+      onClick={() => router.push(`/tasks/edit/${task.id}`)}
     >
-      <div className="font-bold text-3xl ">{task.nombre}</div>
-      <div className="flex"> <h1 className="text-blue-800">Description:</h1>{task.descripcion}</div>
-      <div className="flex"><h1 className="text-blue-800">Price:</h1> {task.price}</div>
+      <div className="flex justify-center">
+        <div className="font-bold text-3xl ">{task.nombre}</div>
+      </div>
 
+      <div className="flex justify-center">
+        <img
+          className="w-7/12 h-60 object-cover"
+          src={`/${task.foto}`}
+          alt=""
+        />
+      </div>
 
-      
-      <img src={`/${task.foto}`} alt="" />
+      <div className="flex justify-center mb-2">
+        {" "}
+        <h1 className="text-blue-800">Description:</h1>
+        {task.descripcion}
+      </div>
+      <div className="flex justify-center mb-2">
+        <h1 className="text-blue-800">Price:</h1> {task.price}
+      </div>
 
-
-
-
-      <div>{new Date(task.createdAt).toLocaleDateString()}</div>
+      <div className="flex justify-center mb-2">
+        <h1 className="text-blue-800">Date:</h1>{" "}
+        {new Date(task.createdAt).toLocaleDateString()}
+      </div>
     </div>
   );
 };

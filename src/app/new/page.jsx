@@ -11,7 +11,6 @@ const NewPage = ({ params }) => {
   const [name, setname] = useState("");
   const [file, setfile] = useState(null);
 
-
   useEffect(() => {
     if (params.id) {
       fetch(`/api/products/${params.id}`)
@@ -26,7 +25,6 @@ const NewPage = ({ params }) => {
   }, []);
 
   const router = useRouter();
-
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -50,7 +48,12 @@ const NewPage = ({ params }) => {
     const form = new FormData();
     form.set("file", file);
 
-    if (!file) return;
+    if (!file) {
+      router.push("/");
+      router.refresh();
+      return;
+    }
+
     const a = await fetch("/api/upload", {
       method: "POST",
       body: form,
@@ -58,7 +61,6 @@ const NewPage = ({ params }) => {
 
     // const b = await a.json();
     // console.log(b);
-
     router.push("/");
     router.refresh();
   };
@@ -111,15 +113,18 @@ const NewPage = ({ params }) => {
           type="file"
           onChange={(e) => {
             setfile(e.target.files[0]);
-            setname(e.target.files[0].name)
-            setfoto(e.target.files[0].name)
+            setname(e.target.files[0].name);
+            setfoto(e.target.files[0].name);
           }}
         />
 
-        <button className="bg-blue-500 hover:bg-blue-900 p-3 m-2 rounded-lg">click</button>
+        <button className="bg-blue-500 hover:bg-blue-900 p-3 m-2 rounded-lg">
+          click
+        </button>
 
         {params.id && (
-          <button type="button"
+          <button
+            type="button"
             className="bg-red-500 hover:bg-red-900 p-3 m-2 rounded-lg"
             onClick={async () => {
               const res = await fetch(`/api/products/${params.id}`, {
