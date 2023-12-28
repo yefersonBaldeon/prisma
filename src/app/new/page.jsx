@@ -8,6 +8,9 @@ const NewPage = ({ params }) => {
   const [descripcion, setdescription] = useState("");
   const [price, setprice] = useState("");
   const [foto, setfoto] = useState("");
+  const [name, setname] = useState("");
+  const [file, setfile] = useState(null);
+
 
   useEffect(() => {
     if (params.id) {
@@ -23,6 +26,8 @@ const NewPage = ({ params }) => {
   }, []);
 
   const router = useRouter();
+
+
   const onSubmit = async (e) => {
     e.preventDefault();
 
@@ -41,7 +46,18 @@ const NewPage = ({ params }) => {
       const data = await res.json();
       //   console.log(data);
     }
-    
+
+    const form = new FormData();
+    form.set("file", file);
+
+    if (!file) return;
+    const a = await fetch("/api/upload", {
+      method: "POST",
+      body: form,
+    });
+
+    // const b = await a.json();
+    // console.log(b);
 
     router.push("/");
     router.refresh();
@@ -91,7 +107,14 @@ const NewPage = ({ params }) => {
           onChange={(e) => setfoto(e.target.value)}
           value={foto}
         />
-
+        <input
+          type="file"
+          onChange={(e) => {
+            setfile(e.target.files[0]);
+            setname(e.target.files[0].name)
+            setfoto(e.target.files[0].name)
+          }}
+        />
 
         <button className="bg-blue-500 hover:bg-blue-900 p-3 m-2 rounded-lg">click</button>
 

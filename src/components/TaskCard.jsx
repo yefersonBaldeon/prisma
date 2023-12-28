@@ -3,7 +3,6 @@ import { useRouter } from "next/navigation";
 import React from "react";
 
 
-
 const TaskCard = ({task}) => {
 
     const router = useRouter();
@@ -13,9 +12,16 @@ const TaskCard = ({task}) => {
         onClick={() => router.push(`/tasks/edit/${task.id}`)}
     >
       <div className="font-bold text-3xl ">{task.nombre}</div>
-      <div>{task.descripcion}</div>
-      <div>{task.price}</div>
-      <div>{task.foto}</div>
+      <div className="flex"> <h1 className="text-blue-800">Description:</h1>{task.descripcion}</div>
+      <div className="flex"><h1 className="text-blue-800">Price:</h1> {task.price}</div>
+
+
+      
+      <img src={`/${task.foto}`} alt="" />
+
+
+
+
       <div>{new Date(task.createdAt).toLocaleDateString()}</div>
     </div>
   );
